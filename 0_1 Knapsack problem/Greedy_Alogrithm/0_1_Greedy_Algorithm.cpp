@@ -2,6 +2,9 @@
 #include <iomanip>
 using namespace std;
 
+/*
+	Zero_One_Knapsack class describes the elements of objects and includes weight、value and unitValue(the value of every unit weight)
+*/
 class Zero_One_Knapsack
 {
 public:
@@ -13,7 +16,7 @@ public:
 	void setValue(int value);
 	double getUnitValue();
 	void setUnitValue(double unitValue);
-	int compareTo(Zero_One_Knapsack knapsack);
+	int compareTo(Zero_One_Knapsack knapsack);	// to compare with another objects and return 1 or 0. 1 means the another object is less than this and vice versa
 private:
 	int weight;
 	int value;
@@ -133,6 +136,7 @@ void Greedy_Algorithm::uvsort(Zero_One_Knapsack * bags, int size)
 	
 	for (int i = 0; i < size; i++)
 	{
+		// adjust the width to make them in the same column and print them
 		cout << "UV:"  << setw(10) << left << bags[i].getUnitValue() << " Weight:" << setw(10) << left << bags[i].getWeight() << " Value:" << setw(10) << left << bags[i].getValue() << endl;
 	}
 }
@@ -144,6 +148,7 @@ int Greedy_Algorithm::getBestValue()
 
 int main()
 {
+	// Create Object Array
 	Zero_One_Knapsack bags[8] = {	Zero_One_Knapsack(2, 13),
                						Zero_One_Knapsack(1, 10), 
 									Zero_One_Knapsack(3, 24), 
