@@ -81,10 +81,12 @@ public:
 	void solve();
 	void uvsort(Zero_One_Knapsack * bags, int size);
 	int getBestValue();
+	int getCurrentMaxWeight(); 
 private:
 	Zero_One_Knapsack * bags;
 	int totalWeight;
 	int bestValue; 
+	int currentMaxWeight;
 	int size;
 };
 
@@ -94,6 +96,7 @@ Greedy_Algorithm::Greedy_Algorithm(Zero_One_Knapsack * bags, int totalWeight, in
 	this->totalWeight = totalWeight;
 	this->size = size;
 	bestValue = 0;
+	currentMaxWeight = 0;
 	uvsort(bags, size);
 }
 
@@ -109,6 +112,8 @@ void Greedy_Algorithm::solve()
 		tempWeight -= bags[i].getWeight();
 		bestValue += bags[i].getValue();
 	}
+	
+	currentMaxWeight = totalWeight - tempWeight;
 };
 
 void Greedy_Algorithm::uvsort(Zero_One_Knapsack * bags, int size)
@@ -137,7 +142,7 @@ void Greedy_Algorithm::uvsort(Zero_One_Knapsack * bags, int size)
 	for (int i = 0; i < size; i++)
 	{
 		// adjust the width to make them in the same column and print them
-		cout << "UV:"  << setw(10) << left << bags[i].getUnitValue() << " Weight:" << setw(10) << left << bags[i].getWeight() << " Value:" << setw(10) << left << bags[i].getValue() << endl;
+		cout << "UV:"  << setw(10) << left << bags[i].getUnitValue() << " Weight:" << setw(5) << left << bags[i].getWeight() << " Value:" << setw(5) << left << bags[i].getValue() << endl;
 	}
 }
 
@@ -146,22 +151,75 @@ int Greedy_Algorithm::getBestValue()
 	return bestValue;
 }
 
+int Greedy_Algorithm::getCurrentMaxWeight()
+{
+	return currentMaxWeight;
+}
+
 int main()
 {
 	// Create Object Array
-	Zero_One_Knapsack bags[8] = {	Zero_One_Knapsack(2, 13),
-               						Zero_One_Knapsack(1, 10), 
-									Zero_One_Knapsack(3, 24), 
-									Zero_One_Knapsack(2, 15),
-                					Zero_One_Knapsack(4, 28), 
-									Zero_One_Knapsack(5, 33), 
-									Zero_One_Knapsack(3, 20),
-                					Zero_One_Knapsack(1, 8)		};
-                
-    int totalWeight = 12;
-    
-    Greedy_Algorithm ga(bags, totalWeight,8);
+	// Original Datas
+//	Zero_One_Knapsack bags[8] = {	Zero_One_Knapsack(2, 13),
+//               						Zero_One_Knapsack(1, 10), 
+//									Zero_One_Knapsack(3, 24), 
+//									Zero_One_Knapsack(2, 15),
+//                					Zero_One_Knapsack(4, 28), 
+//									Zero_One_Knapsack(5, 33), 
+//									Zero_One_Knapsack(3, 20),
+//                					Zero_One_Knapsack(1, 8)		};
+
+	//Test 1
+//	Zero_One_Knapsack bags[] = {
+//									Zero_One_Knapsack(95, 55),
+//									Zero_One_Knapsack(4, 10),
+//									Zero_One_Knapsack(60, 47),
+//									Zero_One_Knapsack(32, 5),
+//									Zero_One_Knapsack(23, 4),
+//									Zero_One_Knapsack(72, 50),
+//									Zero_One_Knapsack(80, 8),
+//									Zero_One_Knapsack(62, 61),
+//									Zero_One_Knapsack(65, 85),
+//									Zero_One_Knapsack(46, 87)
+//																};
+//                
+//    int totalWeight = 269;
+//    
+//    Greedy_Algorithm ga(bags, totalWeight,10);
+
+	//Test 2
+	Zero_One_Knapsack bags[] = {
+									Zero_One_Knapsack(92, 44),
+									Zero_One_Knapsack( 4, 46),
+									Zero_One_Knapsack(43, 90),
+									Zero_One_Knapsack(83, 72),
+									Zero_One_Knapsack(84, 91),
+									
+									Zero_One_Knapsack(68, 40),
+									Zero_One_Knapsack(92, 75),
+									Zero_One_Knapsack(82, 35),
+									Zero_One_Knapsack( 6, 8),
+									Zero_One_Knapsack(44, 54),
+									
+									Zero_One_Knapsack(32, 78),
+									Zero_One_Knapsack(18, 40),
+									Zero_One_Knapsack(56, 77),
+									Zero_One_Knapsack(83, 15),
+									Zero_One_Knapsack(25, 61),
+									
+									Zero_One_Knapsack(96, 17),
+									Zero_One_Knapsack(70, 75),
+									Zero_One_Knapsack(48, 29),
+									Zero_One_Knapsack(14, 75),
+									Zero_One_Knapsack(58, 63),
+															};
+	
+	int totalWeight = 878;
+	
+	Greedy_Algorithm ga(bags, totalWeight,20);
+															
     ga.solve();
     
     cout << "BestValue:" << ga.getBestValue() << endl;
+    cout << "CurrentMaxWeight:" << ga.getCurrentMaxWeight() << endl;
 }
