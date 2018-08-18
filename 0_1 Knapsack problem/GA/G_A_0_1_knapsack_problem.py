@@ -21,7 +21,7 @@ def fitness (test_sack, weights, values, max_weight):
 	else:
 		return value
 
-
+	""" 随机生成个体并计算其适应度值 """
 def generateASack (item_quantity, weights, values, max_weight):
 	i = 0
 	sack = []
@@ -33,6 +33,7 @@ def generateASack (item_quantity, weights, values, max_weight):
 	result.append(sack)
 	return result
 
+	""" 生成第一代种群并堆排序 """
 def generateFirstPopulation(size_population, item_quantity, weights, values, max_weight):
 	population = []
 	i = 0
@@ -50,6 +51,7 @@ def computePerfPopulation(population, password):
 		populationPerf[individual] = fitness(password, individual)
 	return sorted(populationPerf.items(), key = operator.itemgetter(1), reverse=True)
 
+	""" 保留精英并随机选取lucky个进化 """
 def selectFromPopulation(old_population, best_sample, lucky_few):
 	best = []
 	for i in range(best_sample):
@@ -61,6 +63,7 @@ def selectFromPopulation(old_population, best_sample, lucky_few):
 	#random.shuffle(nextGeneration)
 	return best + lucky
 
+	""" 利用保留下来的个体进行交叉遗传 """
 def createChild(individual1, individual2, weights, values, max_weight):
 	sack = []
 	child = []
@@ -73,6 +76,7 @@ def createChild(individual1, individual2, weights, values, max_weight):
 	child.append(sack)
 	return child
 
+	""" 生成子代 """
 def createChildren(breeders, weights, values, max_weight):
 	nextPopulation = []
 	size = len(breeders)
@@ -89,6 +93,7 @@ def mutateWord(sack, weights, values, max_weight):
 	sack[0] = (-fitness(sack[1], weights, values, max_weight))
 	return sack
 
+	""" 对交叉遗传后的子代进行变异操作 """
 def mutatePopulation(population, chance_of_mutation, weights, values, max_weight):
 	for i in range(len(population)):
 		if random.random() * 100 < chance_of_mutation:
@@ -96,14 +101,15 @@ def mutatePopulation(population, chance_of_mutation, weights, values, max_weight
 	heapq.heapify(population)
 	return population
 
+	""" 生成下一代种群，包括精英保留、交叉、变异三个部分 """
 def nextGeneration (firstGeneration, best_sample, lucky_few, chance_of_mutation, weights, values, max_weight):
-	#populationSorted = computePerfPopulation(firstGeneration, password)
 	print(firstGeneration, '\n')
 	nextBreeders = selectFromPopulation(firstGeneration, best_sample, lucky_few)
 	nextPopulation = createChildren(nextBreeders, weights, values, max_weight)
 	nextGeneration = mutatePopulation(nextPopulation, chance_of_mutation, weights, values, max_weight)
 	return nextGeneration
 
+	""" Genetic Algorithm """
 def multipleGeneration(number_of_generation, size_population,
 				   best_sample, lucky_few, chance_of_mutation,
 				   item_quantity, weights, values, max_weight):
