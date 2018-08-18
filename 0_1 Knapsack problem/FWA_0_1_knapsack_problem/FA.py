@@ -3,10 +3,8 @@ import copy
 import random
 
 
-class Population:
-    """
-    population
-    """
+class FA:
+
     epsino = 1e-30
     target = 295
 
@@ -46,9 +44,6 @@ class Population:
                 self.MinFitness = self.pop[i].fitness
 
     def CalculateSi(self):
-        """
-        Refer to equation (3)
-        """
         self.UpdateMaxFintess()
         temp = 0.
         for i in range(0, self.popsize):
@@ -63,9 +58,6 @@ class Population:
                 self.pop[i].si = round(self.pop[i].si)
 
     def CalculateExpo(self):
-        """
-        Refer to equation (4)
-        """
         self.UpdateMinFitness()
         temp = 0.
         for i in range(0, self.popsize):
@@ -74,9 +66,6 @@ class Population:
             self.pop[i].Ai = self.A * (self.pop[i].fitness - self.MinFitness + self.epsino) / (temp + self.epsino)
 
     def Explosion(self):
-        """
-        Refer to Algorithm 1 in the orginal paper
-        """
         for k in range(0, self.popsize):
             newpop = []
             for i in range(0, self.pop[k].si):
@@ -95,9 +84,6 @@ class Population:
             self.pop += newpop
 
     def Mutation(self):
-        """
-        Refer to Algorithm 2 in the orginal paper
-        """
         newpop = []
         currentsize = len(self.pop)
         for k in range(0, self.mm):
